@@ -1,106 +1,13 @@
-<!DOCTYPE html>
-<html lang="sk">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SL/TP Kalkulačka</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
-      color: #fff;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container {
-      background-color: rgba(255, 255, 255, 0.1);
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      max-width: 400px;
-      width: 100%;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    label {
-      margin-top: 1rem;
-      display: block;
-      font-weight: bold;
-    }
-    input {
-      width: 100%;
-      padding: 0.75rem;
-      margin-top: 0.25rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 0.5rem;
-      outline: none;
-    }
-    button {
-      margin-top: 1.5rem;
-      width: 100%;
-      padding: 0.75rem;
-      font-size: 1rem;
-      background-color: #00c896;
-      color: white;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #00aa7a;
-    }
-    .result {
-      margin-top: 2rem;
-      background-color: rgba(255, 255, 255, 0.2);
-      padding: 1rem;
-      border-radius: 1rem;
-      text-align: center;
-    }
-    .result p {
-      margin: 0.5rem 0;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>SL/TP Kalkulačka</h2>
+<label for="entryPrice">Cena vstupu:</label>
+<input type="number" id="entryPrice" />
 
-    <label for="entryPrice">Cena vstupu:</label>
-    <input type="number" id="entryPrice" />
+<label for="swingLow">Swing Low:</label>
+<input type="number" id="swingLow" />
 
-    <label for="swingLow">Swing Low:</label>
-    <input type="number" id="swingLow" />
+<button onclick="calculate()">Vypočítať SL a TP</button>
 
-    <button onclick="calculate()">Vypočítať SL a TP</button>
-
-    <div class="result" id="result" style="display: none">
-      <p><strong>Stop-Loss (SL):</strong> <span id="sl"></span></p>
-      <p><strong>Take-Profit (TP):</strong> <span id="tp"></span></p>
-      <p><em>Pomer riziko : zisk = 1 : 2</em></p>
-    </div>
-  </div>
-
-  <script>
-    function calculate() {
-      const entryPrice = parseFloat(document.getElementById('entryPrice').value);
-      const swingLow = parseFloat(document.getElementById('swingLow').value);
-      if (isNaN(entryPrice) || isNaN(swingLow)) return;
-
-      const sl = swingLow - 10;
-      const risk = entryPrice - sl;
-      const tp = entryPrice + risk * 2;
-
-      document.getElementById('sl').textContent = sl.toFixed(2);
-      document.getElementById('tp').textContent = tp.toFixed(2);
-      document.getElementById('result').style.display = 'block';
-    }
-  </script>
-</body>
-</html>
+<div class="result" id="result" style="display: none">
+  <p><strong>Stop-Loss (SL):</strong> <span id="sl"></span></p>
+  <p><strong>Take-Profit (TP):</strong> <span id="tp"></span></p>
+  <p><em>Pomer riziko : zisk = 1 : 2</em></p>
+</div>
