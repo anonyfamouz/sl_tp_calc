@@ -1,13 +1,24 @@
-<label for="entryPrice">Cena vstupu:</label>
-<input type="number" id="entryPrice" />
+<script>
+  function calculate() {
+    const entry = document.getElementById('entryPrice').value;
+    const low = document.getElementById('swingLow').value;
+    console.log("Vstupná cena:", entry);
+    console.log("Swing Low:", low);
 
-<label for="swingLow">Swing Low:</label>
-<input type="number" id="swingLow" />
+    const entryPrice = parseFloat(entry);
+    const swingLow = parseFloat(low);
 
-<button onclick="calculate()">Vypočítať SL a TP</button>
+    if (isNaN(entryPrice) || isNaN(swingLow)) {
+      alert("Prosím, zadaj platné číselné hodnoty.");
+      return;
+    }
 
-<div class="result" id="result" style="display: none">
-  <p><strong>Stop-Loss (SL):</strong> <span id="sl"></span></p>
-  <p><strong>Take-Profit (TP):</strong> <span id="tp"></span></p>
-  <p><em>Pomer riziko : zisk = 1 : 2</em></p>
-</div>
+    const sl = swingLow - 10;               // Výpočet SL (swing low mínus 10)
+    const risk = entryPrice - sl;           // Výpočet rizika
+    const tp = entryPrice + risk * 2;       // Výpočet TP (risk * 2)
+
+    document.getElementById('sl').textContent = sl.toFixed(2);
+    document.getElementById('tp').textContent = tp.toFixed(2);
+    document.getElementById('result').style.display = 'block';
+  }
+</script>
