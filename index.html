@@ -110,26 +110,24 @@
   </div>
 
   <script>
-    function calculate() {
-      const entry = document.getElementById('entryPrice').value;
-      const low = document.getElementById('swingLow').value;
+  function calculate() {
+    const entry = document.getElementById('entryPrice').value;
+    const low = document.getElementById('swingLow').value;
 
-      const entryPrice = parseFloat(entry);
-      const swingLow = parseFloat(low);
+    const entryPrice = parseFloat(entry);
+    const swingLow = parseFloat(low);
 
-      if (isNaN(entryPrice) || isNaN(swingLow)) {
-        alert("Please enter valid numerical values.");
-        return;
-      }
-
-      const sl = swingLow - 10;
-      const risk = entryPrice - sl;
-      const tp = entryPrice + risk * 2;
-
-      document.getElementById('sl').textContent = sl.toFixed(2);
-      document.getElementById('tp').textContent = tp.toFixed(2);
-      document.getElementById('result').style.display = 'block';
+    if (isNaN(entryPrice) || isNaN(swingLow)) {
+      alert("Please enter valid numerical values.");
+      return;
     }
+
+    const sl = swingLow * 0.988; // 1.2 % pod Swing Low
+    const risk = entryPrice - sl;
+    const tp = entryPrice + risk * 2;
+
+    document.getElementById('sl').textContent = sl.toFixed(2);
+    document.getElementById('tp').textContent = tp.toFixed(2);
+    document.getElementById('result').style.display = 'block';
+  }
   </script>
-</body>
-</html>
