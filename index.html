@@ -84,6 +84,12 @@
       margin-top: 0.5rem;
       text-align: center;
     }
+    .tip {
+      color: #ffcc00;
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -103,6 +109,7 @@
       <p><strong>Take-Profit (TP):</strong> <span id="tp"></span></p>
       <p><strong>Risk:Reward Ratio:</strong> <span id="rr"></span></p>
       <p class="danger" id="danger" style="display: none"></p>
+      <p class="tip" id="realistic" style="display: none"></p>
     </div>
   </div>
 
@@ -112,6 +119,7 @@
       const swingLow = parseFloat(document.getElementById('swingLow').value);
       const resultDiv = document.getElementById('result');
       const danger = document.getElementById('danger');
+      const realistic = document.getElementById('realistic');
 
       if (isNaN(entry) || isNaN(swingLow)) {
         alert("Please enter valid numerical values.");
@@ -122,18 +130,28 @@
       const risk = entry - sl;
       const tp = entry + risk * 2;
       const rr = (tp - entry) / risk;
+      const tpPercent = ((tp - entry) / entry) * 100;
+      const realisticTP = entry * 1.0045;
 
       resultDiv.style.display = 'block';
       danger.style.display = 'none';
+      realistic.style.display = 'none';
+
+      document.getElementById('sl').textContent = sl.toFixed(2);
+      document.getElementById('tp').textContent = tp.toFixed(2);
+      document.getElementById('rr').textContent = "1 : " + rr.toFixed(2);
 
       if (rr < 1) {
         danger.textContent = "⚠️ Warning: Risk is greater than reward. Trade may not be worth taking.";
         danger.style.display = 'block';
       }
 
-      document.getElementById('sl').textContent = sl.toFixed(2);
-      document.getElementById('tp').textContent = tp.toFixed(2);
-      document.getElementById('rr').textContent = "1 : " + rr.toFixed(2);
+      if (tpPercent < 0.3 || tpPercent > 0.6) {
+        realistic.textContent =
+          "⚠️ TP target is likely unrealistic for a 15-minute chart.\nSuggested realistic TP (0.45%): " +
+          realisticTP.toFixed(2);
+        realistic.style.display = 'block';
+      }
     }
   </script>
 </body>
