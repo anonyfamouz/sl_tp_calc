@@ -122,9 +122,9 @@
       return;
     }
 
-    const sl = swingLow * 0.988; // 1.2 % pod Swing Low
+    const sl = swingLow * 0.992;  // SL = 0.8 % pod swing low
     const risk = entryPrice - sl;
-    const tp = entryPrice + risk * 2;
+    const tp = entryPrice + risk * 1.5;  // RR = 1 : 1.5
 
     document.getElementById('sl').textContent = sl.toFixed(2);
     document.getElementById('tp').textContent = tp.toFixed(2);
