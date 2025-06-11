@@ -90,6 +90,13 @@
       margin-top: 0.3rem;
       text-align: center;
     }
+    .highlight-tp {
+      color: #bfff00;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: block;
+      margin-top: 0.3rem;
+    }
   </style>
 </head>
 <body>
@@ -147,9 +154,9 @@
       }
 
       if (tpPercent < 0.3 || tpPercent > 0.6) {
-        realistic.textContent =
-          "⚠️ TP target is likely unrealistic for a 15-minute chart.\nSuggested realistic TP (0.45%): " +
-          realisticTP.toFixed(2);
+        realistic.innerHTML =
+          "⚠️ TP is too far for a 15min chart." +
+          "<span class='highlight-tp'>Suggested TP (+0.45%): " + realisticTP.toFixed(2) + "</span>";
         realistic.style.display = 'block';
       }
     }
