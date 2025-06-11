@@ -16,50 +16,45 @@
       align-items: center;
       min-height: 100vh;
     }
-
     .container {
       background-color: #1e1e1e;
       padding: 2rem;
       border-radius: 1rem;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-      width: 100%;
+      width: 90%;
       max-width: 400px;
       box-sizing: border-box;
     }
-
     h2 {
       text-align: center;
       margin-bottom: 1.5rem;
-      font-size: 1.5rem;
-      text-transform: uppercase;
+      font-size: 1.4rem;
       color: #ffffff;
+      text-transform: uppercase;
     }
-
     label {
       margin-top: 1rem;
       display: block;
       font-weight: 500;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #cccccc;
     }
-
     input {
       width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.25rem;
-      font-size: 1rem;
+      padding: 0.4rem;
+      margin-top: 0.3rem;
+      font-size: 0.9rem;
       border: none;
       border-radius: 0.4rem;
       background-color: #2c2c2c;
       color: #ffffff;
       outline: none;
     }
-
     button {
       margin-top: 1.5rem;
       padding: 0.6rem 1.2rem;
       font-size: 1rem;
-      background-color: #a2c579;
+      background-color: #99cc33;
       color: #000;
       border: none;
       border-radius: 0.5rem;
@@ -69,11 +64,9 @@
       margin-right: auto;
       transition: background-color 0.3s ease;
     }
-
     button:hover {
-      background-color: #8caf65;
+      background-color: #88b32d;
     }
-
     .result {
       margin-top: 2rem;
       background-color: #2a2a2a;
@@ -81,19 +74,15 @@
       border-radius: 1rem;
       text-align: center;
     }
-
     .result p {
       margin: 0.5rem 0;
       color: #ffffff;
     }
-
-    @media (max-width: 480px) {
-      h2 {
-        font-size: 1.2rem;
-      }
-      input, button {
-        font-size: 0.95rem;
-      }
+    .warning {
+      color: #ffcc00;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      text-align: center;
     }
   </style>
 </head>
@@ -112,26 +101,41 @@
     <div class="result" id="result" style="display: none">
       <p><strong>Stop-Loss (SL):</strong> <span id="sl"></span></p>
       <p><strong>Take-Profit (TP):</strong> <span id="tp"></span></p>
-      <p><em>Risk to reward ratio = 1 : 2</em></p>
+      <p><strong>Risk:Reward Ratio:</strong> <span id="rr"></span></p>
+      <p class="warning" id="warning" style="display: none"></p>
     </div>
   </div>
 
   <script>
     function calculate() {
-      const entryPrice = parseFloat(document.getElementById('entryPrice').value);
+      const entry = parseFloat(document.getElementById('entryPrice').value);
       const swingLow = parseFloat(document.getElementById('swingLow').value);
-      if (isNaN(entryPrice) || isNaN(swingLow)) {
-        alert("Please enter valid numbers.");
+      const resultDiv = document.getElementById('result');
+      const warning = document.getElementById('warning');
+
+      if (isNaN(entry) || isNaN(swingLow)) {
+        alert("Please enter valid numerical values.");
         return;
       }
 
       const sl = swingLow - 100;
-      const risk = entryPrice - sl;
-      const tp = entryPrice + (risk * 2);
+      let risk = entry - sl;
+      let tp = entry + risk * 2;
+      let rrRatio = "1 : 2";
+      resultDiv.style.display = 'block';
+      warning.style.display = 'none';
+
+      if (tp - entry > 400) {
+        tp = entry + 400;
+        risk = entry - sl;
+        rrRatio = `1 : ${(tp - entry) / risk < 0 ? 0 : ((tp - entry) / risk).toFixed(2)}`;
+        warning.textContent = "⚠️ TP was adjusted due to excessive distance (limit = +400 from entry).";
+        warning.style.display = 'block';
+      }
 
       document.getElementById('sl').textContent = sl.toFixed(2);
       document.getElementById('tp').textContent = tp.toFixed(2);
-      document.getElementById('result').style.display = 'block';
+      document.getElementById('rr').textContent = rrRatio;
     }
   </script>
 </body>
