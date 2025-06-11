@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SL/TP Kalkulačka</title>
+  <title>SL/TP Calculator</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -30,6 +30,7 @@
       margin-bottom: 1.2rem;
       font-size: 1.3rem;
       color: #ffffff;
+      text-transform: uppercase;
     }
     label {
       margin-top: 1rem;
@@ -61,8 +62,7 @@
     }
     button {
       margin-top: 1.5rem;
-      width: 100%;
-      padding: 0.6rem;
+      padding: 0.6rem 1.2rem;
       font-size: 1rem;
       background-color: #bfff00;
       color: #000;
@@ -70,6 +70,9 @@
       border-radius: 0.5rem;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
     button:hover {
       background-color: #a4e400;
@@ -97,20 +100,20 @@
 </head>
 <body>
   <div class="container">
-    <h2>SL/TP Kalkulačka</h2>
+    <h2>SL/TP Calculator</h2>
 
-    <label for="entryPrice">Cena vstupu:</label>
+    <label for="entryPrice">Entry Price:</label>
     <input type="number" id="entryPrice" step="any" />
 
     <label for="swingLow">Swing Low:</label>
     <input type="number" id="swingLow" step="any" />
 
-    <button onclick="calculate()">Vypočítať SL a TP</button>
+    <button onclick="calculate()">Calculate SL and TP</button>
 
     <div class="result" id="result" style="display: none">
       <p><strong>Stop-Loss (SL):</strong> <span id="sl"></span></p>
       <p><strong>Take-Profit (TP):</strong> <span id="tp"></span></p>
-      <p><em>Pomer riziko : zisk = 1 : 2</em></p>
+      <p><em>Risk to reward ratio = 1 : 2</em></p>
     </div>
   </div>
 
@@ -118,14 +121,14 @@
     function calculate() {
       const entry = document.getElementById('entryPrice').value;
       const low = document.getElementById('swingLow').value;
-      console.log("Vstupná cena:", entry);
+      console.log("Entry Price:", entry);
       console.log("Swing Low:", low);
 
       const entryPrice = parseFloat(entry);
       const swingLow = parseFloat(low);
 
       if (isNaN(entryPrice) || isNaN(swingLow)) {
-        alert("Prosím, zadaj platné číselné hodnoty.");
+        alert("Please enter valid numerical values.");
         return;
       }
 
