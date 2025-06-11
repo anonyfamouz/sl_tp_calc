@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SL/TP Calculator</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="SL/TP Calc">
+  <link rel="apple-touch-icon" href="icon.png">
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -50,7 +54,7 @@
       color: #ffffff;
       outline: none;
     }
-    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
       -webkit-appearance: none;
       margin: 0;
@@ -121,8 +125,6 @@
     function calculate() {
       const entry = document.getElementById('entryPrice').value;
       const low = document.getElementById('swingLow').value;
-      console.log("Entry Price:", entry);
-      console.log("Swing Low:", low);
 
       const entryPrice = parseFloat(entry);
       const swingLow = parseFloat(low);
