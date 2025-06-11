@@ -84,6 +84,12 @@
       margin-top: 0.5rem;
       text-align: center;
     }
+    .danger {
+      color: #ff5555;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -103,6 +109,7 @@
       <p><strong>Take-Profit (TP):</strong> <span id="tp"></span></p>
       <p><strong>Risk:Reward Ratio:</strong> <span id="rr"></span></p>
       <p class="warning" id="warning" style="display: none"></p>
+      <p class="danger" id="danger" style="display: none"></p>
     </div>
   </div>
 
@@ -112,6 +119,7 @@
       const swingLow = parseFloat(document.getElementById('swingLow').value);
       const resultDiv = document.getElementById('result');
       const warning = document.getElementById('warning');
+      const danger = document.getElementById('danger');
 
       if (isNaN(entry) || isNaN(swingLow)) {
         alert("Please enter valid numerical values.");
@@ -119,23 +127,29 @@
       }
 
       const sl = swingLow - 100;
-      let risk = entry - sl;
+      const risk = entry - sl;
       let tp = entry + risk * 2;
-      let rrRatio = "1 : 2";
+      let rr = 2; // default 1:2
       resultDiv.style.display = 'block';
       warning.style.display = 'none';
+      danger.style.display = 'none';
 
       if (tp - entry > 400) {
         tp = entry + 400;
-        risk = entry - sl;
-        rrRatio = `1 : ${(tp - entry) / risk < 0 ? 0 : ((tp - entry) / risk).toFixed(2)}`;
+        rr = (tp - entry) / risk;
         warning.textContent = "⚠️ TP was adjusted due to excessive distance (limit = +400 from entry).";
         warning.style.display = 'block';
       }
 
+      // Check if R:R < 1
+      if (rr < 1) {
+        danger.textContent = "⚠️ Warning: Risk is greater than reward. Trade may not be worth taking.";
+        danger.style.display = 'block';
+      }
+
       document.getElementById('sl').textContent = sl.toFixed(2);
       document.getElementById('tp').textContent = tp.toFixed(2);
-      document.getElementById('rr').textContent = rrRatio;
+      document.getElementById('rr').textContent = "1 : " + rr.toFixed(2);
     }
   </script>
 </body>
